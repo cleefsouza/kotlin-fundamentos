@@ -2,66 +2,109 @@ package main;
 
 import java.util.*
 
+data class Contato(
+    var nome: String,
+    var email: String?,
+    var idade: Int
+);
+
 fun main() {
-    var nome: String;
-    var email: String? = null;
-    var idade: Int;
-    var i: Int;
+    var c = Contato("", null, 0);
+    var listaContatos = mutableListOf<Contato>();
+    var opc: Int = 0;
 
-//    var input: Scanner = Scanner(System.`in`);
-//    nome = input.nextLine()
+    while(opc != 0) {
+        println(">>> Menu");
+        println(">>> 1-Cadastrar");
+        println(">>> 2-Listar");
+        println(">>> 3-Remover");
+        println(">>> 0-Sair");
 
-do {
+        print(">>> ")
+        opc = readLine.toInt();
 
-    println("Adicionar novo contato.");
+        when(opc) {
+            1 -> {
+                do {
+                    println(">>> Adicionar novo contato.");
 
-    print("Nome: ");
-    nome = readLine().toString();
+                    print(">>> Nome: ");
+                    c.nome = readLine().toString();
 
-    print("Email: ")
-    email = readLine().toString() ?: "Email não informado";
+                    print(">>> Email: ")
+                    c.email = readLine().toString() ?: "Email não informado";
 
-    print("Idade: ")
-    idade = readLine().toInt();
+                    print(">>> Idade: ")
+                    c.idade = readLine().toInt();
 
-    println("Contato de $nome salvo com sucesso!");
+                    listaContatos.add(c);
 
-    // if (idade <= 17) {
-    //     println("$nome é menor de idade!");
-    // } else if (idade in 18 .. 60) {
-    //     println("$nome é adulto!");
-    // } else {
-    //     println("$nome é idoso!");
+                    println(">>> Contato de ${c.nome} salvo com sucesso!");
+
+                    when(c.idade) {
+                        in 1..17 -> println(">>> ${c.nome} é menor de idade!");
+                        in 18..60 -> {
+                            println(">>> ${c.nome} é adulto.");
+                            println(">>> ${c.nome} já pode ser preso!")
+                        }
+                        else ->println(">>> ${c.nome} é idoso!");
+                    }
+
+                        println(">>> Deseja continuar adicionando contatos? 1-Sim | 0-Não")
+                        opc = readLine().toInt();
+                    } while (opc==0) {
+                        println(">>> Saindo...")
+                    }
+            }
+            2 -> {
+                println(">>> Lista de contatos.")
+                for (lc in listaContatos)  {
+                    println(">>> Nome: ${lc.nome} | Email: ${lc.email} | Idade: ${lc.idade}")
+                }
+            }
+            3 -> {
+                print(">>> Informe o contato que deseja remover: ")
+                var idx: Int? = readLine.toInt();
+                if (idx != null) {
+                    listaContatos.removeAt(idx);
+                } else {
+                    println(">>> Contato não encontrado")
+                }
+            }
+            0 -> {
+                println(">>> Saindo...")
+                break;
+            }
+            else -> println(">>> Opção inválida!")
+        }
+    }
+}
+
+    //    var input: Scanner = Scanner(System.`in`);
+    //    nome = input.nextLine()
+
+    // for (i in 1..5) {
+    //     if (i%2==0) {
+    //         println("$i é par!")
+    //         continue;
+    //     } else {
+    //         println("$i é ímpar!")
+    //     }
     // }
-
-    when(idade) {
-        in 1..17 -> println("$nome é menor de idade!");
-        in 18..60 -> {
-            println("$nome é adulto.");
-            println("$nome já pode ser preso!")
-        }
-        else ->println("$nome é idoso!");
-    }
-
-    for (i in 1..5) {
-        if (i%2==0) {
-            println("$i é par!")
-            continue;
-        } else {
-            println("$i é ímpar!")
-        }
-    }
 
     // println("Lenght: ${nome.length}");
     // println("Equals: ${nome.equals("Cleef")}");
     // println("Reversed: ${nome.reversed()}");
     // println("Slice: ${nome.slice(1..3)}");
 
-        println("Deseja continuar adicionando contatos? 1-Sim | 0-Não")
-        i = readLine().toInt();
-    } while (i==0) {
-        println("Saindo...")
-    }
+    // if (c.idade <= 17) {
+    //     println("${c.nome} é menor de idade!");
+    // } else if (idade in 18 .. 60) {
+    //     println("${c.nome} é adulto!");
+    // } else {
+    //     println("${c.nome} é idoso!");
+    // }
+
 
     // (a + 20 x b),(a + 20 x b + 21 x b), ... , (a + 20 x b + 21 x b + ... + 2n-1 x b)
     // var t: Int = 1;
@@ -69,18 +112,17 @@ do {
     // for(i in 1..t)
     // {
     //     val (a, b, n) = s.split(" ").map { it.toInt() }
-		
+
     //     // code        
     //     var x: Int = 1;
     //     var res: Int = a+(x*b);
     //     var str: String = res.toString()
-        
+
     //     for (j in 1..n-1) {
     //         x *= 2;
     //         res += (x*b)
     //     	str += " ${res.toString()}"
     //     }
-        
+
     //     println(str)
     // }
-}
