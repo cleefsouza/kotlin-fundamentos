@@ -5,13 +5,13 @@ import java.util.*
 data class Contato(
     var nome: String,
     var email: String?,
-    var idade: Int
+    var idade: Int?
 );
 
 fun main() {
     var c = Contato("", null, 0);
     var listaContatos = mutableListOf<Contato>();
-    var opc: Int = 0;
+    var opc: Int? = null;
 
     while(opc != 0) {
         println(">>> Menu");
@@ -21,61 +21,62 @@ fun main() {
         println(">>> 0-Sair");
 
         print(">>> ")
-        opc = readLine.toInt();
+        opc = readLine()?.toInt();
 
         when(opc) {
             1 -> {
-                do {
+                var cdt: Int? = 1
+
+                while(cdt != 0) {
                     println(">>> Adicionar novo contato.");
 
                     print(">>> Nome: ");
                     c.nome = readLine().toString();
 
-                    print(">>> Email: ")
+                    print(">>> Email: ");
                     c.email = readLine().toString() ?: "Email não informado";
 
-                    print(">>> Idade: ")
-                    c.idade = readLine().toInt();
+                    print(">>> Idade: ");
+                    c.idade = readLine()?.toInt();
 
+                    var c = Contato(c.nome, c.email, c.idade);
                     listaContatos.add(c);
 
                     println(">>> Contato de ${c.nome} salvo com sucesso!");
 
-                    when(c.idade) {
+                    when (c.idade) {
                         in 1..17 -> println(">>> ${c.nome} é menor de idade!");
                         in 18..60 -> {
                             println(">>> ${c.nome} é adulto.");
-                            println(">>> ${c.nome} já pode ser preso!")
+                            println(">>> ${c.nome} já pode ser preso!");
                         }
-                        else ->println(">>> ${c.nome} é idoso!");
+                        else -> println(">>> ${c.nome} é idoso!");
                     }
 
-                        println(">>> Deseja continuar adicionando contatos? 1-Sim | 0-Não")
-                        opc = readLine().toInt();
-                    } while (opc==0) {
-                        println(">>> Saindo...")
-                    }
+                    println(">>> Deseja continuar adicionando contatos? 1-Sim | 0-Não");
+                    cdt = readLine()?.toInt();
+                }
             }
             2 -> {
-                println(">>> Lista de contatos.")
+                println(">>> Lista de contatos.");
                 for (lc in listaContatos)  {
-                    println(">>> Nome: ${lc.nome} | Email: ${lc.email} | Idade: ${lc.idade}")
+                    println(">>> Nome: ${lc.nome} | Email: ${lc.email} | Idade: ${lc.idade}");
                 }
             }
             3 -> {
-                print(">>> Informe o contato que deseja remover: ")
-                var idx: Int? = readLine.toInt();
+                print(">>> Informe o contato que deseja remover: ");
+                var idx: Int? = readLine()?.toInt();
                 if (idx != null) {
                     listaContatos.removeAt(idx);
                 } else {
-                    println(">>> Contato não encontrado")
+                    println(">>> Contato não encontrado");
                 }
             }
             0 -> {
-                println(">>> Saindo...")
+                println(">>> Saindo...");
                 break;
             }
-            else -> println(">>> Opção inválida!")
+            else -> println(">>> Opção inválida!");
         }
     }
 }
